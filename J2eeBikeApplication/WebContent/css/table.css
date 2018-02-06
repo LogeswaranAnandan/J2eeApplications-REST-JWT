@@ -1,0 +1,9 @@
+@charset "ISO-8859-1";
+
+#table tr:nth-child(even) {
+    background: linear-gradient(to right, white, aliceblue);
+}
+
+#table tr:nth-child(odd) {
+    background: linear-gradient(to right, aliceblue, white);
+}

@@ -1,0 +1,124 @@
+@charset "ISO-8859-1";
+body {
+	background-color: lightsteelblue;
+}
+
+form {
+    border: 1px solid black;
+    padding: 30px;
+    width: 35%;
+    margin: 0 auto;
+    background-image: url("../images/login-form-img.jpg");
+}
+
+header {
+    display: block;
+    width: fit-content;
+    margin: 0 auto;
+    font-size: 40px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    letter-spacing: 1px;
+    color: #E3E3E3;
+    text-shadow: 1px 1px 10px #1762EE;
+}
+
+span {
+    font-size: 24px;
+    color: #B2B2B2;
+    margin: 20px;
+}
+
+label {
+    display: block;
+    text-transform: uppercase;
+    font-family: "Droid Serif","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 18px;
+    padding: 5px 0;
+    margin: 12px 0 0 18px;
+    color: #B2B2B2;
+}
+
+input {
+	display: block;
+    width: 95%;
+    border-radius: 30px;
+    font-size: 18px;
+    padding: 8px 8px 8px 18px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-style: oblique;
+    letter-spacing: 1px;
+	color: #FFF;
+	background: transparent;
+	border: 1px solid #1762EE;
+}
+
+::placeholder {
+	color: #E3E3E3;
+	opacity: 1;
+}
+
+input[type='submit'] {
+    width: 30%;
+    padding: 10px;
+    margin: 25px auto 0 auto;
+    text-align: center;
+    font-size: 18px;
+    background-color: #1762EE;
+    color: #fff;
+    border: none;
+    opacity: 0.9;
+    letter-spacing: 2px;
+}
+
+.login-container {
+    margin: 30px 0px;
+}
+
+.sign-up {
+	color: white;
+	letter-spacing: 1px;
+	border-bottom: 3px solid #1762EE;
+	font-family: Georgia, 'Times New Roman', Times, serif;
+    text-shadow: 1px 1px 5px #1762EE;
+    padding-bottom: 1px;
+}
+
+input.wrong-input {
+	border: 1px solid red;
+}
+
+input:focus {
+	border: 1px solid #1762EE;
+}
+
+a {
+	text-decoration: none;
+}
+
+input {
+	outline: none;
+}
+
+@media screen and (min-width: 500px) and (max-width: 800px) {
+	form {
+		width: 60%;
+	}
+}
+
+@media screen and (max-width: 499px) {
+	form {
+		width: 84vw;
+	}
+	
+	span {
+		font-size: 30px;
+	}
+	
+	input {
+		font-size: 16px;
+	}
+	
+	label {
+		font-size: 16px;
+	}
+}

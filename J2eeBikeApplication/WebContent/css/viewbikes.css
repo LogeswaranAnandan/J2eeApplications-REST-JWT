@@ -1,0 +1,91 @@
+@charset "ISO-8859-1";
+
+header {
+	background-color: #1fa67a;
+}
+
+.header-form {
+	display: flex;
+}
+
+.header-form input[type="submit"]{
+	flex-basis: 0;
+	flex-grow: 1;
+	padding: 15px;
+	background-color: cadetblue;
+	font-size: 18px;
+	border: none;
+	cursor: pointer;
+	color: white;
+}
+
+.header-form input[type="submit"]:hover,
+button > a:hover {
+	color: #ffcc66;
+}
+
+.user-name-container {
+	flex-basis: 0;
+    flex-grow: 2;
+    padding: 15px;
+    background-color: cadetblue;
+    text-align: center;
+    color: #ffcc66;
+    font-size: 22px;
+}
+
+.user-name {
+    font-size: 23px;
+    font-weight: bold;
+    text-shadow: 2px 2px forestgreen;
+}
+
+table {
+	display: flex;
+	flex-direction: column;	
+	margin-top: 10px;
+}
+
+tr {
+	display: flex;
+}
+
+td,th {
+	flex-basis: 0;
+	flex-grow: 1;
+	text-align: justify;
+	padding: 10px;
+}
+
+th {
+	background-color: lightsteelblue;
+}
+
+tr:nth-child(even) {
+    background: linear-gradient(to right, white, aliceblue);
+}
+
+tr:nth-child(odd) {
+    background: linear-gradient(to right, aliceblue, white);
+}
+
+div.back-btn {
+	width: 20%;
+	margin : 30px auto 0 auto;
+}
+
+.back-btn button {
+	background: cadetblue;
+}
+
+button > a {
+	text-decoration: none;
+	display: inline-block;
+	padding: 10px 20px;
+	font-size:18px;
+	color: white;
+}
+
+input {
+	outline: none;
+}

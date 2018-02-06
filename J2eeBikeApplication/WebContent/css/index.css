@@ -1,0 +1,154 @@
+@charset "ISO-8859-1";
+body {
+	background-color: lightsteelblue;
+}
+
+.container {
+    margin: 8vh auto;
+}
+
+form {
+	border: 1px solid black;
+    padding: 30px 30px 0;
+    width: 30%;
+    margin: 0 auto;
+    background-image: url("../images/login-form-img.jpg");
+}
+
+header {
+    display: block;
+    width: fit-content;
+    margin: 0 auto;
+    font-size: 40px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    letter-spacing: 1px;
+    color: #E3E3E3;
+    text-shadow: 1px 1px 10px #1762EE;
+}
+
+span {
+    font-size: 24px;
+    color: #B2B2B2;
+    margin: 20px;
+}
+
+.form-label-container {
+    margin: 80px 0 100px 0;
+}
+
+.form-line {
+	border: 1px solid white;
+	margin-top: 100px
+}
+
+.create-account {
+	display: block;
+    width: fit-content;
+    text-decoration: none;
+    color: white;
+    margin: 25px auto;
+    font-size: 20px;
+}
+
+label {
+    display: block;
+    text-transform: uppercase;
+    font-family: "Droid Serif","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 18px;
+    padding: 5px 0;
+    margin: 20px 0 6px 18px;
+    color: #B2B2B2;
+}
+
+input {
+	display: block;
+    width: 95%;
+    border-radius: 30px;
+    font-size: 18px;
+    padding: 8px 8px 8px 18px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-style: oblique;
+    letter-spacing: 1px;
+	color: #FFF;
+	background: transparent;
+	border: 1px solid #1762EE;
+}
+
+::placeholder {
+	color: #E3E3E3;
+	opacity: 1;
+}
+
+input[type='submit'] {
+    width: 30%;
+    padding: 10px;
+    margin: 15px auto 0 auto;
+    text-align: center;
+    font-size: 18px;
+    background-color: #1762EE;
+    color: #fff;
+    border: none;
+    opacity: 0.9;
+    letter-spacing: 2px;
+}
+
+.fa-info-circle {
+    padding: 0 10px;
+}
+
+font {
+	text-align: center;
+    display: block;
+    color: #f44336;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.login-container {
+    margin: 30px 0px;
+}
+
+.welcome {
+	color: white;
+    display: block;
+    letter-spacing: 1px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    text-shadow: 1px 1px 5px #1762EE;
+    padding-bottom: 1px;
+    width: fit-content;
+    margin: 0 auto;
+    font-size: 40px;
+}
+
+a {
+	text-decoration: none;
+}
+
+input {
+	outline: none;
+}
+
+
+@media screen and (min-width: 550px) and (max-width: 800px) {
+	form {
+		width: 60%;
+	}
+}
+
+@media screen and (max-width: 549px) {
+	form {
+		width: 84vw;
+	}
+	
+	span {
+		font-size: 30px;
+	}
+	
+	input {
+		font-size: 16px;
+	}
+	
+	label {
+		font-size: 16px;
+	}
+}

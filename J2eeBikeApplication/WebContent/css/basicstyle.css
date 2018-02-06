@@ -1,0 +1,300 @@
+@charset "ISO-8859-1";
+
+nav {
+	background-color: cadetblue;
+}
+
+nav {
+	display: flex;
+}
+
+nav form {
+	flex-basis: 0;
+	flex-grow: 1;
+	flex-shrink: 5;
+	background-color: cadetblue;
+	text-align: center;
+}
+
+nav input[type="submit"] {
+	background: transparent;
+	text-align: center;
+	padding: 15px;
+	font-size: 18px;
+	border: none;
+	cursor: pointer;
+	color: white;
+}
+
+.nav-form a {
+	text-decoration: none;
+	text-align: center;
+	font-weight: bold;
+    padding: 18px 15px 12px;
+}
+
+nav input[type="submit"]:hover,
+button > a:hover,
+input[value="Logout"]:hover {
+	color: #ffcc66;
+}
+
+.current {
+	border-bottom: 5px solid black;
+}
+
+#user-name-container {
+	flex-basis: 0;
+    flex-grow: 1;
+    flex-shrink: 2;
+    padding: 15px;
+    background-color: cadetblue;
+    text-align: center;
+    color: lightblue;
+    text-shadow: 1px 1px 5px blue;
+    font-size: 22px;
+    position: relative;
+    cursor: pointer;
+}
+
+.user-name {
+    font-size: 23px;
+    font-weight: bold;
+}
+
+#menu-icon {
+    padding: 15px;
+    font-size: 25px;
+    color: white;	
+    display: none;
+}
+
+table {
+	display: flex;
+	flex-direction: column;	
+	margin-top: 10px;
+	clear: both;
+}
+
+tr {
+	display: flex;
+	padding: 5px 0px;
+}
+
+td,th {
+	flex-basis: 0;
+	flex-grow: 2;
+	text-align: center;
+	padding: 10px;
+}
+
+th {
+	background-color: lightsteelblue;
+}
+
+tr:nth-child(2n) {
+    background: linear-gradient(to right, white, aliceblue);
+}
+
+tr:nth-child(4n) {
+    background: linear-gradient(to right, aliceblue, white);
+}
+
+.flex-grow-1 {
+	flex-grow: 1;
+}
+
+div.back-btn {
+	width: fit-content;
+	margin : 30px auto 0 auto;
+}
+
+.back-btn button {
+	background: cadetblue;
+}
+
+button > a {
+	text-decoration: none;
+	display: inline-block;
+	padding: 10px 20px;
+	font-size:18px;
+	color: white;
+}
+
+input[value="Logout"] {
+	float: right;
+    width: 300px;
+    padding: 15px;
+    background-color: cadetblue;
+    font-size: 18px;
+    border: 2px solid cornflowerblue;
+    cursor: pointer;
+    color: white;
+    position: absolute;
+    right: 7px;
+}
+
+.display-none {
+	display: none;
+}
+
+.display-block {
+	display: block;
+}
+
+input {
+	outline: none;
+}
+
+input[type="submit"] {
+	cursor: pointer;
+}
+
+input[disabled] {
+	cursor: auto;
+}
+
+.red-button {
+	background-color: #f44336;
+	color: white;
+    padding: 5px 10px;
+    font-size: 16px;
+    border: none;
+}
+
+.green-button {
+	background-color: #4CAF50;
+	color: white;
+    padding: 5px 10px;
+    font-size: 16px;
+    border: none;
+}
+
+@media screen and (max-width : 1100px) and (min-width: 800px) {
+	#user-name-container {
+		display: none;
+	}
+	
+	.main-container {
+	    position: relative;
+	    top: 25vh;
+	}
+	
+	.main-container > h1 {
+    	font-size: 45px;
+	}
+	
+	.main-container > h2 {
+   		font-size: 32px;
+	}
+	
+	.rent-btn {
+    	font-size: 24px;
+	}
+}
+
+
+@media screen and (max-width : 799px) and (min-width : 200px) {
+	
+	nav {
+		position: relative;
+		display: block;
+	}
+	
+	nav form:not(:first-child),
+	#user-name-container {
+		display: none;
+	}
+	
+	nav form:first-child {
+		text-align: left;
+	}
+	
+	#menu-icon {
+		display: inline-block;
+	    float: right;
+	    cursor: pointer;
+	    position: absolute;
+	    top: 0;
+	    right: 0;
+	}
+		
+	.nav-form.display-menu form:not(:first-child) {
+	    display: block;
+	    width: 100%;
+	    background-color: grey;
+	    text-align: left;
+	}
+	
+	.nav-form.display-menu form:hover,
+	#logout:hover {
+		background: #555;
+	}
+	
+	#logout {
+		position: static;
+		display: block;
+	    width: 100%;
+	    text-align: left;
+	    background: gray;
+	    border: none;
+	}
+	
+	/* 
+	table {
+	    display: flex;
+	    flex-direction: row;
+	    margin-top: 10px;
+	    clear: both;
+	}
+	
+	tr {
+		display: flex;
+	    padding: 5px 0px;
+	    flex-wrap: wrap;
+	    flex-direction: column
+	}
+	
+	tbody {
+		display: flex;
+		overflow: auto;
+	}
+	 */
+	 
+	tbody {
+		overflow: auto;
+	}
+	
+	.main-container {
+	    position: relative;
+	    top: 25vh;
+	}
+	
+	.main-container > h1 {
+    	font-size: 35px;
+	}
+	
+	.main-container > h2 {
+   		font-size: 22px;
+	}
+	
+	.rent-btn {
+    	font-size: 20px;
+	}
+	
+	td,
+	th {
+		flex-basis: 40px;
+	}
+	
+	.red-button,
+	.green-button {
+		font-size: 13px;
+		padding: 5px;
+	}
+	
+	.hide-in-mobile {
+		display: none;
+	}
+	
+}

@@ -1,0 +1,18 @@
+@charset "ISO-8859-1";
+
+.rent-amount-container {
+	width: fit-content;
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 50px;
+    font-size: 30px;
+    line-height: 50px;
+}
+
+.rent-amount {
+	font-size: 40px;
+}
+
+input {
+	outline: none;
+}

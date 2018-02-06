@@ -1,0 +1,77 @@
+@charset "ISO-8859-1";
+
+body {
+	margin: 0;	
+}
+
+form {
+	margin: 0;
+}
+
+section {
+	background-image: url("../images/bgimg.jpg");
+	background-size: 100% 100%;
+	width: 100%;
+	height: 91.5vh;
+}
+
+.main-container {
+	position: relative;
+	top: 25vh;
+}
+
+.main-container > h1 {    
+    font-size: 64px;
+    margin: 0;
+    color: ghostwhite;
+    text-shadow: 5px 5px 50px black;
+    text-align: center;
+    font-family: cursive;
+    padding: 20px 0 10px 0;
+}
+
+.main-container > h2 {    
+    font-size: 40px;
+    margin: 0;
+    color: lightblue;
+    text-shadow: 2px 2px 5px blue;
+    text-align: center;
+    font-family: cursive;
+}
+
+#logout {
+	right: 0;
+}
+
+.rent-btn {
+    font-size: 30px;
+    flex-grow: 0;
+    display: block;
+    width: fit-content;
+    margin: 0 auto;
+    margin-top: 50px;
+    border-radius: 5px;
+    text-shadow: 2px 2px 2px steelblue;
+    color: white;
+    background-color: cadetblue;
+    outline: none;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+input[value="Rent a Bike"]:hover {
+    color: #ffcc66;
+}
+
+input {
+	outline: none;
+}
+
+@media screen and (max-width : 800px) and (min-width : 200px) {
+	
+	section {
+		height: 89%;
+	}	
+}
+
