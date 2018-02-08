@@ -17,7 +17,7 @@
 		<form action="CustomerServlet">
 			<input type="submit" name="customer-functionality" value="View All Bikes"/>
 		</form>
-		<form action="FactoryServlet">
+		<form action="CustomerServlet">
 			<input type="submit" name="customer-functionality" value="Return the Bike"/>
 		</form>
 		<form action="CustomerServlet">

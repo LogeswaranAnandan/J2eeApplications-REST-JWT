@@ -13,26 +13,30 @@ import com.bikeapplication.bean.ApplicationBeanClass;
 import com.bikeapplication.bean.BikeBeanClass;
 import com.bikeapplication.bean.RentBeanClass;
 import com.bikeapplication.bean.RentCalculatorBeanClass;
+import com.bikeapplication.constants.Constants;
 import com.bikeapplication.dao.BikeApplicationDao;
+import com.bikeapplication.utility.HttpRequest;
+import com.bikeapplication.utility.ParserClass;
 
 public class CustomerDelegate {
 	Logger logger = Logger.getLogger(CustomerDelegate.class.getName());
 	BikeApplicationDao dao = new BikeApplicationDao();
+	HttpRequest httpRequest = new HttpRequest();
 
 	public List<BikeBeanClass> viewAllBikes() {
-		List<BikeBeanClass> bikeBeanList = dao.viewAllBikes();
-		return bikeBeanList;
+		ParserClass<BikeBeanClass> parser = new ParserClass<>();
+		String responseBody = httpRequest.doGet("http://localhost:8080/RestBikeApplication/rest/bikes");
+		List<BikeBeanClass> beanList = parser.toJavaList(responseBody, BikeBeanClass[].class);
+		return beanList;
 	}
 	
-	public List<BikeBeanClass> viewAvailableBikes() {
-		List<BikeBeanClass> bikeBeanList = dao.viewAvailableBikes();
-		return bikeBeanList;
-	}
 	
 	public void rentBike(HttpServletRequest request, HttpServletResponse response) {
 		response.setContentType("text/html");
 		RentBeanClass rentBean = new RentBeanClass();
+		ParserClass<RentBeanClass> parser = new ParserClass<>();
 		HttpSession session = request.getSession();
+		String requestUrl = "http://localhost:8080/RestBikeApplication/rest/bikes/rent";
 		try {
 			PrintWriter out = response.getWriter();
 			int userId = Integer.parseInt(session.getAttribute("userId").toString());
@@ -43,13 +47,13 @@ public class CustomerDelegate {
 			rentBean.setBikeId(bikeId);
 			rentBean.setDuration(rentDuration);
 			rentBean.setAdvancePaid(advancePaid);
-			boolean isSuccessful = dao.rentBike(rentBean);
-			if (isSuccessful == true) {
+			String jsonString = parser.toJson(rentBean);
+			String bufferContent = httpRequest.doPost(requestUrl, jsonString, Constants.PLAIN_TEXT);
+			if (bufferContent.equals("true")) {
 				out.println("<script>alert('Bike is rented successfully')</script>");
 			} else {
-				out.println(
-						"<script>alert('Some problem occurred while renting the bike. Please try again..!')</script>");
-			}
+				out.println("<script>alert('Some problem occurred while renting the bike. Please try again..!')</script>");
+			}	
 		} catch (Exception e) {
 			logger.info("problem while creating printwriter in rentbike method");
 		}
@@ -58,25 +62,29 @@ public class CustomerDelegate {
 	public void viewUserRentedBikes(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		int userId = Integer.parseInt(session.getAttribute("userId").toString());
-		List<BikeBeanClass> bikeBeanList = dao.userRentedBike(userId);
-		List<RentCalculatorBeanClass> rentCalculatorBeanList = new ArrayList<>();
-		for (BikeBeanClass bikeBean : bikeBeanList) {
-			int bikeId = bikeBean.getBikeId();
-			String registrationNumber = bikeBean.getRegistrationNumber();
-			RentBeanClass rentBean = dao.getRentDetails(userId, bikeId, registrationNumber);
-			RentCalculatorBeanClass rentCalculatorBean = dao.rentCalculator(rentBean, bikeId);
-			rentCalculatorBeanList.add(rentCalculatorBean);
-		}
-		request.setAttribute("bikeBeanList", bikeBeanList);
-		request.setAttribute("rentCalculatorBeanList", rentCalculatorBeanList);
+		String responseBody = httpRequest.doGet("http://localhost:8080/RestBikeApplication/rest/rented/user/" + userId);
+		ParserClass<ApplicationBeanClass> parser = new ParserClass<>();
+		List<ApplicationBeanClass> appBeanList = parser.toJavaList(responseBody, ApplicationBeanClass[].class);
+		request.setAttribute("appBeanList", appBeanList);
+		System.out.println("In customer delegate");
+		System.out.println("list is " + appBeanList.toString());
 	}
 	
 	public void returnBike(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		int userId = Integer.parseInt(session.getAttribute("userId").toString());
 		int bikeId = Integer.parseInt(request.getParameter("bike-id"));
+		
+		ParserClass<RentCalculatorBeanClass> parser = new ParserClass<>();
 		String registrationNumber = request.getParameter("registration-number");
-		RentCalculatorBeanClass rentCalculatorBean = dao.returnBike(userId, bikeId, registrationNumber);
+		registrationNumber = registrationNumber.replaceAll(" ", "%20");
+		String requestUrl = "http://localhost:8080/RestBikeApplication/rest/bikes/return/" + registrationNumber +"?bikeid="
+				+ bikeId + "&userid=" + userId;
+		String requestBody = "";
+		String acceptType = "application/json";
+		String responseBody = httpRequest.doPost(requestUrl, requestBody, acceptType);
+		RentCalculatorBeanClass rentCalculatorBean = parser.toJava(responseBody, RentCalculatorBeanClass.class); 
+		System.out.println("Rent calculator bean = " + rentCalculatorBean.toString());
 		request.setAttribute("rentCalculatorBean", rentCalculatorBean);
 		request.setAttribute("status", "Return this Bike");
 	}

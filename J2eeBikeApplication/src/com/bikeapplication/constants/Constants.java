@@ -55,5 +55,5 @@ public class Constants {
 	public static final String RETURNED = "Returned";
 	public static final String RENTED = "Rented";
 	public static final String ADD_REGISTRATION_NUMBER = "insert into bikeregistrationdetails values(?,?,'Available')";
-	
+	public static final String PLAIN_TEXT = "text/plain";
 }

@@ -9,5 +9,12 @@
 	</form>
 	
 	<a href="./studentdetails.jsp">Send data</a>
+	
+	<form action = "rest/files/upload" method="post" enctype="multipart/form-data">
+		select a file : <input type="file" name="file" size="45" />
+		<input type="submit" value="submit" />
+	</form>
+	
+	
 </body>
 </html>

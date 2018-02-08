@@ -24,55 +24,51 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${bikeBeanList }" var="bikeBean">
+				<c:forEach items="${appBeanList }" var="appBean">
+					<c:set var="bikeBean" value="${appBean.getBikeBean() }"/>
+					<c:set var="rentCalculatorBean" value="${appBean.getRentCalculatorBean() }"/>
 					<form action="CustomerServlet" method="get">
 						<tr>
 							<td>${bikeBean.getManufacturer() } - ${bikeBean.getBikeName() }</td>
 							<td>${bikeBean.getRegistrationNumber() }</td>
-							<c:forEach items="${rentCalculatorBeanList }" var="rentCalculatorBean">
 								<c:choose>
-									<c:when test="${rentCalculatorBean.getRegistrationNumber()  == bikeBean.getRegistrationNumber() }">
-										<c:choose>
-											<c:when test="${rentCalculatorBean.getPenaltyHours() > '0' }">
-												<td>Charge for ${rentCalculatorBean.getHoursRented() } hours is <b>&#8377;${rentCalculatorBean.getActualCharge() } </b></td>
-												<td>Penalty for extra time of ${rentCalculatorBean.getPenaltyHours() } hour is <b>&#8377;${rentCalculatorBean.getPenaltyCharge() } </b></td>
-												<%-- <td>The total charge is <b>&#8377;${rentCalculatorBean.getTotalCharge() } </b></td> --%>
-												<td>Advance paid is <b>&#8377;${rentCalculatorBean.getAdvancePaid() } </b></td>
-											</c:when>
-											<c:otherwise>
-												<td>Charge for ${rentCalculatorBean.getHoursRented() } hours is <b>&#8377;${rentCalculatorBean.getActualCharge() } </b></td>
-												<td>Nil</td>
-												<%-- <td>The total charge is <b>&#8377;${rentCalculatorBean.getActualCharge() } </b></td> --%>
-												<td>Advance paid is <b>&#8377;${rentCalculatorBean.getAdvancePaid() } </b></td>
-											</c:otherwise>
-										</c:choose>
-										<c:choose>
-											<c:when test="${rentCalculatorBean.getRemainingPayment() < '0' }">
-												<td><b>&#8377;${-rentCalculatorBean.getRemainingPayment() } has be refunded</b></td>
-											</c:when>
-											<c:otherwise>
-												<td><b>&#8377;${rentCalculatorBean.getRemainingPayment() } has to be paid</b></td>
-											</c:otherwise>
-										</c:choose>
-										<c:choose>
-											<c:when test="${rentCalculatorBean.getPenaltyHours() > '0' }">
-												<td>
-													<input type="hidden" name="bike-id"	value="${bikeBean.getBikeId() }" />
-													<input type="hidden" name="registration-number"	value="${bikeBean.getRegistrationNumber() }" />
-													<input type="submit" name="customer-functionality" value="Return this Bike" class="red-button" />
-												</td>
-											</c:when>
-											<c:otherwise>
-												<td>
-													<input type="hidden" name="bike-id"	value="${bikeBean.getBikeId() }" />
-													<input type="hidden" name="registration-number"	value="${bikeBean.getRegistrationNumber() }" />
-													<input type="submit" name="customer-functionality" value="Return this Bike" class="green-button"/>
-												</td>
-											</c:otherwise>
-										</c:choose>
+									<c:when test="${rentCalculatorBean.getPenaltyHours() > '0' }">
+										<td>Charge for ${rentCalculatorBean.getHoursRented() } hours is <b>&#8377;${rentCalculatorBean.getActualCharge() } </b></td>
+										<td>Penalty for extra time of ${rentCalculatorBean.getPenaltyHours() } hour is <b>&#8377;${rentCalculatorBean.getPenaltyCharge() } </b></td>
+										<%-- <td>The total charge is <b>&#8377;${rentCalculatorBean.getTotalCharge() } </b></td> --%>
+										<td>Advance paid is <b>&#8377;${rentCalculatorBean.getAdvancePaid() } </b></td>
 									</c:when>
+									<c:otherwise>
+										<td>Charge for ${rentCalculatorBean.getHoursRented() } hours is <b>&#8377;${rentCalculatorBean.getActualCharge() } </b></td>
+										<td>Nil</td>
+										<%-- <td>The total charge is <b>&#8377;${rentCalculatorBean.getActualCharge() } </b></td> --%>
+										<td>Advance paid is <b>&#8377;${rentCalculatorBean.getAdvancePaid() } </b></td>
+									</c:otherwise>
 								</c:choose>
-							</c:forEach>
+								<c:choose>
+									<c:when test="${rentCalculatorBean.getRemainingPayment() < '0' }">
+										<td><b>&#8377;${-rentCalculatorBean.getRemainingPayment() } has be refunded</b></td>
+									</c:when>
+									<c:otherwise>
+										<td><b>&#8377;${rentCalculatorBean.getRemainingPayment() } has to be paid</b></td>
+									</c:otherwise>
+								</c:choose>
+								<c:choose>
+									<c:when test="${rentCalculatorBean.getPenaltyHours() > '0' }">
+										<td>
+											<input type="hidden" name="bike-id"	value="${bikeBean.getBikeId() }" />
+											<input type="hidden" name="registration-number"	value="${bikeBean.getRegistrationNumber() }" />
+											<input type="submit" name="customer-functionality" value="Return this Bike" class="red-button" />
+										</td>
+									</c:when>
+									<c:otherwise>
+										<td>
+											<input type="hidden" name="bike-id"	value="${bikeBean.getBikeId() }" />
+											<input type="hidden" name="registration-number"	value="${bikeBean.getRegistrationNumber() }" />
+											<input type="submit" name="customer-functionality" value="Return this Bike" class="green-button"/>
+										</td>
+									</c:otherwise>
+								</c:choose>
 						</tr>
 					</form>
 				</c:forEach>

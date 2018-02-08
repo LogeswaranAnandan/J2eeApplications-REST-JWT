@@ -17,15 +17,15 @@ public class DatabaseConnection {
 	public Connection getConnection() {
 		try {
 			Context context = new InitialContext();
-			DataSource dataSource = (DataSource)context.lookup("java:comp/env/jdbc/bikerentingapplication");
+			DataSource dataSource = (DataSource) context.lookup("java:comp/env/jdbc/bikerentingapplication");
 			Connection connection = dataSource.getConnection();
 			return connection;
 		} catch (NamingException | SQLException e) {
-			logger.warning("Problem while creating a connection");
+			logger.warning("Problem while creating a connection in application");
 		}
 		return null;
 	}
-
+	
 	public void closeConnection(ResultSet result, Statement statement, Connection connection) {
 		try {
 			if (result != null) {

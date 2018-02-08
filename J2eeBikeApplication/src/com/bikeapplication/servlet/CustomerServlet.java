@@ -36,7 +36,12 @@ public class CustomerServlet extends HttpServlet {
 			request.setAttribute("bikeBeanList", bikeBeanList);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/customer/ViewAllBikes.jsp");
 			dispatcher.forward(request, response);
-		} else if (functionality.equals("Rent this Bike")) {
+		} else if (functionality.equals("Return the Bike")) {
+			delegate.viewUserRentedBikes(request, response);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/customer/viewrentedbikes.jsp");
+			dispatcher.forward(request, response);
+		}
+		else if (functionality.equals("Rent this Bike")) {
 			delegate.rentBike(request, response);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/customer/customer.jsp");
 			dispatcher.include(request, response);

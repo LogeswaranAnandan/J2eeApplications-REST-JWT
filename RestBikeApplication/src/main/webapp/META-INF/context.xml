@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+  	<Resource name="jdbc/bikerentingapplication" auth="Container" type="javax.sql.DataSource"
+               maxTotal="30" maxIdle="10" maxWaitMillis="2000"
+               username="root" password="zilkeradmin"
+               driverClassName="com.mysql.jdbc.Driver"
+               url="jdbc:mysql://localhost:3306/bikerentingapplication"/>
+</Context>

@@ -55,8 +55,7 @@ public class StudentDelegate {
 			 */
 			Gson gson = new Gson();
 			String responseBody = stringBuffer.toString();
-			beanList = gson.fromJson(responseBody, new TypeToken<List<StudentBean>>() {
-			}.getType());
+			beanList = gson.fromJson(responseBody, new TypeToken<List<StudentBean>>() {}.getType());
 			logger.info("In beanlist");
 			logger.info(beanList.toString());
 		} catch (Exception e) {
