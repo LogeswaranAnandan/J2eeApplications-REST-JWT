@@ -21,4 +21,11 @@ public class RentResource {
 	public List<ApplicationBeanClass> viewUserRentedBikes(@PathParam("userId") int userId) {
 		return delegate.viewUserRentedBikes(userId);
 	}
+	
+	@GET
+	@Path("history/{userId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<ApplicationBeanClass> viewRentHistory(@PathParam("userId") int userId) {
+		return delegate.viewRentHistory(userId);
+	}
 }

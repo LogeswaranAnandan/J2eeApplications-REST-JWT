@@ -29,4 +29,8 @@ public class CustomerDelegate {
 	public RentCalculatorBeanClass returnBike(int userId, int bikeId, String registrationNumber) {
 		return dao.returnBike(userId, bikeId, registrationNumber);
 	}
+
+	public List<ApplicationBeanClass> viewRentHistory(int userId) {
+		return dao.viewRentHistory(userId);
+	}
 }

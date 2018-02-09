@@ -1,5 +1,20 @@
 <html>
 <body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
     <h2>Jersey RESTful Web Application!</h2>
     <p><a href="rest/myresource">Jersey resource</a>
     <p>Visit <a href="http://jersey.java.net">Project Jersey website</a>
@@ -14,7 +29,7 @@
 		select a file : <input type="file" name="file" size="45" />
 		<input type="submit" value="submit" />
 	</form>
-	
+	 -->
 	
 </body>
 </html>

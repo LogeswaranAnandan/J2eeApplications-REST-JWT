@@ -66,8 +66,6 @@ public class CustomerDelegate {
 		ParserClass<ApplicationBeanClass> parser = new ParserClass<>();
 		List<ApplicationBeanClass> appBeanList = parser.toJavaList(responseBody, ApplicationBeanClass[].class);
 		request.setAttribute("appBeanList", appBeanList);
-		System.out.println("In customer delegate");
-		System.out.println("list is " + appBeanList.toString());
 	}
 	
 	public void returnBike(HttpServletRequest request, HttpServletResponse response) {
@@ -89,20 +87,19 @@ public class CustomerDelegate {
 		request.setAttribute("status", "Return this Bike");
 	}
 	
-	public void viewRemainingDuration(HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession();
-		int userId = Integer.parseInt(session.getAttribute("userId").toString());
-		int bikeId = Integer.parseInt(request.getParameter("bike-id"));
-		String registrationNumber = request.getParameter("registration-number");
-		RentBeanClass rentBean = dao.getRentDetails(userId, bikeId, registrationNumber);
-		RentCalculatorBeanClass rentCalculatorBean = dao.rentCalculator(rentBean, bikeId);
-		request.setAttribute("rentCalculatorBean", rentCalculatorBean);
-	}
-	
 	public void viewRentHistory(HttpServletRequest request, HttpServletResponse response) {
+		ParserClass<ApplicationBeanClass> parser = new ParserClass<>();
 		HttpSession session = request.getSession();
 		int userId = Integer.parseInt(session.getAttribute("userId").toString());
-		List<ApplicationBeanClass> appBeanList = dao.viewRentHistory(userId);
+		String responseBody = httpRequest.doGet("http://localhost:8080/RestBikeApplication/rest/rented/history/" + userId);
+		List<ApplicationBeanClass> appBeanList = parser.toJavaList(responseBody, ApplicationBeanClass[].class);
 		request.setAttribute("appBeanList", appBeanList);
+		
+		/*
+		ParserClass<BikeBeanClass> parser = new ParserClass<>();
+		String responseBody = httpRequest.doGet("http://localhost:8080/RestBikeApplication/rest/bikes");
+		List<BikeBeanClass> beanList = parser.toJavaList(responseBody, BikeBeanClass[].class);
+		return beanList;
+		*/
 	}
 }

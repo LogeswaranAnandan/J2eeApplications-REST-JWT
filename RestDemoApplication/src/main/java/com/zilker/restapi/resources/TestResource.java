@@ -28,7 +28,6 @@ public class TestResource {
 	@POST
 	@Path("/upload")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
-	@Produces({"image/jpg", "image/png"})
 	public Response fileUpload(
 			@FormDataParam("file") InputStream uploadedInputStream,
 			@FormDataParam("file") FormDataContentDisposition fileDetail) {
@@ -46,7 +45,7 @@ public class TestResource {
 		out.close();
 		
 		decoded = Base64.getDecoder().decode(encoded);
-		//FileUtils.writeByteArrayToFile(file, decoded);
+		FileUtils.writeByteArrayToFile(file, decoded);
 		/*img = ImageIO.read(new ByteArrayInputStream(bytes));
 		System.out.println("img = " + img.toString());*/
 		
