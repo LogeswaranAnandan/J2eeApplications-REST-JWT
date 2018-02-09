@@ -32,8 +32,8 @@ public class JwtRequestFilter implements ContainerRequestFilter {
 		String authHeader = requestContext.getHeaderString("Authorization");
 		logger.info("Auth header = " + authHeader);
 
-		if (authHeader.startsWith("Bearer")) {
-			try {
+		try {
+			if (authHeader.startsWith("Bearer")) {
 				System.out.println("JWT being tested:\n" + authHeader.split(" ")[1]);
 				final String subject = validate(authHeader.split(" ")[1]);
 				if (subject != null) {
@@ -41,28 +41,27 @@ public class JwtRequestFilter implements ContainerRequestFilter {
 				} else {
 					logger.info("subject is null");
 				}
-			} catch (Exception e) {
-				logger.warning("Problem occurred while validating the token");
-				logger.warning("JWT toke is Invalid");
-	            requestContext.setProperty("auth-failed", true);
-	            requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
+			} else {
+				logger.warning("No JWT token is found");
+				requestContext.setProperty("auth-failed", true);
+				requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
 			}
-		} else {
-			logger.warning("No JWT token is found");
-            requestContext.setProperty("auth-failed", true);
-            requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
+		} catch (Exception e) {
+			logger.warning("Problem occurred while validating the token");
+			logger.warning("JWT toke is Invalid");
+			requestContext.setProperty("auth-failed", true);
+			requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
 		}
 	}
 
 	private String validate(String jwt) throws UnsupportedEncodingException, InvalidJwtException {
 		String secret = "secret";
 		String subject = null;
-			JwtConsumer jwtConsumer = new JwtConsumerBuilder().setRequireSubject()
-					.setVerificationKey(new HmacKey(secret.getBytes("UTF-8"))).setRelaxVerificationKeyValidation()
-					.build();
-			JwtClaims jwtClaims = jwtConsumer.processToClaims(jwt);
-			subject = jwtClaims.getClaimValue("sub").toString();
-			logger.info("claims = " + jwtClaims.toString());
+		JwtConsumer jwtConsumer = new JwtConsumerBuilder().setRequireSubject()
+				.setVerificationKey(new HmacKey(secret.getBytes("UTF-8"))).setRelaxVerificationKeyValidation().build();
+		JwtClaims jwtClaims = jwtConsumer.processToClaims(jwt);
+		subject = jwtClaims.getClaimValue("sub").toString();
+		logger.info("claims = " + jwtClaims.toString());
 		return subject;
 	}
 

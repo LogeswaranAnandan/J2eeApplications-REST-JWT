@@ -15,8 +15,7 @@ public class TestResource {
 	@Produces("text/plain")
 	@Secured
 	public String testMethod() {
-		System.out.println("inside test method");
-		return "in test method";
+		return "JSON token validation is done successfully";
 	}
 
 }
