@@ -32,14 +32,29 @@ public class CustomerServlet extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/customer/customer.jsp");
 			dispatcher.forward(request, response);
 		} else if (functionality.equals("View All Bikes") || functionality.equals("Rent a Bike")) {
-			List<BikeBeanClass> bikeBeanList = delegate.viewAllBikes();
-			request.setAttribute("bikeBeanList", bikeBeanList);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/customer/ViewAllBikes.jsp");
+			List<BikeBeanClass> bikeBeanList = delegate.viewAllBikes(request, response);
+			RequestDispatcher dispatcher;
+			if(request.getAttribute("Authorization") != null) {
+				request.setAttribute("loginStatus", "invalid");
+				request.setAttribute("errorMessage", "Please login again");
+				dispatcher = request.getRequestDispatcher("index.jsp");
+				dispatcher.forward(request, response);
+			} else {
+			dispatcher = request.getRequestDispatcher("jsp/customer/ViewAllBikes.jsp");
 			dispatcher.forward(request, response);
+			}
 		} else if (functionality.equals("Return the Bike")) {
 			delegate.viewUserRentedBikes(request, response);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/customer/viewrentedbikes.jsp");
+			RequestDispatcher dispatcher;
+			if(request.getAttribute("Authorization") != null) {
+				request.setAttribute("loginStatus", "invalid");
+				request.setAttribute("errorMessage", "Please login again");
+				dispatcher = request.getRequestDispatcher("index.jsp");
+				dispatcher.forward(request, response);
+			} else {
+			dispatcher = request.getRequestDispatcher("jsp/customer/viewrentedbikes.jsp");
 			dispatcher.forward(request, response);
+			}
 		}
 		else if (functionality.equals("Rent this Bike")) {
 			delegate.rentBike(request, response);
@@ -47,12 +62,28 @@ public class CustomerServlet extends HttpServlet {
 			dispatcher.include(request, response);
 		} else if (functionality.equals("Return this Bike")) {
 			delegate.returnBike(request, response);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/customer/viewrentamount.jsp");
+			RequestDispatcher dispatcher;
+			if(request.getAttribute("Authorization") != null) {
+				request.setAttribute("loginStatus", "invalid");
+				request.setAttribute("errorMessage", "Please login again");
+				dispatcher = request.getRequestDispatcher("index.jsp");
+				dispatcher.forward(request, response);
+			} else {
+			dispatcher = request.getRequestDispatcher("jsp/customer/viewrentamount.jsp");
 			dispatcher.forward(request, response);
+			}
 		} else if (functionality.equals("View Rent History")) {
 			delegate.viewRentHistory(request, response);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/customer/viewrenthistory.jsp");
+			RequestDispatcher dispatcher;
+			if(request.getAttribute("Authorization") != null) {
+				request.setAttribute("loginStatus", "invalid");
+				request.setAttribute("errorMessage", "Please login again");
+				dispatcher = request.getRequestDispatcher("index.jsp");
+				dispatcher.forward(request, response);
+			} else {
+			dispatcher = request.getRequestDispatcher("jsp/customer/viewrenthistory.jsp");
 			dispatcher.forward(request, response);
+			}
 		}
 	}
 

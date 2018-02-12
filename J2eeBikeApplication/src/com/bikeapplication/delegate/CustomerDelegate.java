@@ -23,10 +23,17 @@ public class CustomerDelegate {
 	BikeApplicationDao dao = new BikeApplicationDao();
 	HttpRequest httpRequest = new HttpRequest();
 
-	public List<BikeBeanClass> viewAllBikes() {
+	public List<BikeBeanClass> viewAllBikes(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		String jwt = session.getAttribute("jwt").toString();
 		ParserClass<BikeBeanClass> parser = new ParserClass<>();
-		String responseBody = httpRequest.doGet("http://localhost:8080/RestBikeApplication/rest/bikes");
+		String responseBody = httpRequest.doGet("http://localhost:8080/RestBikeApplication/rest/bikes", jwt);
+		if(responseBody == null) {
+			request.setAttribute("Authorization", "Unauthorized");
+			return null;
+		}
 		List<BikeBeanClass> beanList = parser.toJavaList(responseBody, BikeBeanClass[].class);
+		request.setAttribute("bikeBeanList", beanList);
 		return beanList;
 	}
 	
@@ -36,6 +43,7 @@ public class CustomerDelegate {
 		RentBeanClass rentBean = new RentBeanClass();
 		ParserClass<RentBeanClass> parser = new ParserClass<>();
 		HttpSession session = request.getSession();
+		String jwt = session.getAttribute("jwt").toString();
 		String requestUrl = "http://localhost:8080/RestBikeApplication/rest/bikes/rent";
 		try {
 			PrintWriter out = response.getWriter();
@@ -48,8 +56,11 @@ public class CustomerDelegate {
 			rentBean.setDuration(rentDuration);
 			rentBean.setAdvancePaid(advancePaid);
 			String jsonString = parser.toJson(rentBean);
-			String bufferContent = httpRequest.doPost(requestUrl, jsonString, Constants.PLAIN_TEXT);
-			if (bufferContent.equals("true")) {
+			String responseBody = httpRequest.doPost(requestUrl, jsonString, Constants.PLAIN_TEXT, jwt);
+			if(responseBody == null) {
+				request.setAttribute("Authorization", "Unauthorized");
+				return;
+			}else if (responseBody.equals("true")) {
 				out.println("<script>alert('Bike is rented successfully')</script>");
 			} else {
 				out.println("<script>alert('Some problem occurred while renting the bike. Please try again..!')</script>");
@@ -61,8 +72,13 @@ public class CustomerDelegate {
 	
 	public void viewUserRentedBikes(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
+		String jwt = session.getAttribute("jwt").toString();
 		int userId = Integer.parseInt(session.getAttribute("userId").toString());
-		String responseBody = httpRequest.doGet("http://localhost:8080/RestBikeApplication/rest/rented/user/" + userId);
+		String responseBody = httpRequest.doGet("http://localhost:8080/RestBikeApplication/rest/rented/user/" + userId, jwt);
+		if(responseBody == null) {
+			request.setAttribute("Authorization", "Unauthorized");
+			return;
+		}
 		ParserClass<ApplicationBeanClass> parser = new ParserClass<>();
 		List<ApplicationBeanClass> appBeanList = parser.toJavaList(responseBody, ApplicationBeanClass[].class);
 		request.setAttribute("appBeanList", appBeanList);
@@ -70,6 +86,7 @@ public class CustomerDelegate {
 	
 	public void returnBike(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
+		String jwt = session.getAttribute("jwt").toString();
 		int userId = Integer.parseInt(session.getAttribute("userId").toString());
 		int bikeId = Integer.parseInt(request.getParameter("bike-id"));
 		
@@ -80,7 +97,11 @@ public class CustomerDelegate {
 				+ bikeId + "&userid=" + userId;
 		String requestBody = "";
 		String acceptType = "application/json";
-		String responseBody = httpRequest.doPost(requestUrl, requestBody, acceptType);
+		String responseBody = httpRequest.doPost(requestUrl, requestBody, acceptType , jwt);
+		if(responseBody == null) {
+			request.setAttribute("Authorization", "Unauthorized");
+			return;
+		}
 		RentCalculatorBeanClass rentCalculatorBean = parser.toJava(responseBody, RentCalculatorBeanClass.class); 
 		System.out.println("Rent calculator bean = " + rentCalculatorBean.toString());
 		request.setAttribute("rentCalculatorBean", rentCalculatorBean);
@@ -90,8 +111,13 @@ public class CustomerDelegate {
 	public void viewRentHistory(HttpServletRequest request, HttpServletResponse response) {
 		ParserClass<ApplicationBeanClass> parser = new ParserClass<>();
 		HttpSession session = request.getSession();
+		String jwt = session.getAttribute("jwt").toString();
 		int userId = Integer.parseInt(session.getAttribute("userId").toString());
-		String responseBody = httpRequest.doGet("http://localhost:8080/RestBikeApplication/rest/rented/history/" + userId);
+		String responseBody = httpRequest.doGet("http://localhost:8080/RestBikeApplication/rest/rented/history/" + userId, jwt);
+		if(responseBody == null) {
+			request.setAttribute("Authorization", "Unauthorized");
+			return;
+		}
 		List<ApplicationBeanClass> appBeanList = parser.toJavaList(responseBody, ApplicationBeanClass[].class);
 		request.setAttribute("appBeanList", appBeanList);
 		

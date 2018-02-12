@@ -1,4 +1,4 @@
-package com.zilker.restapi.jwtutil;
+package com.bikeapplication.utility;
 
 import java.util.Date;
 
@@ -8,15 +8,15 @@ import org.jose4j.jwt.JwtClaims;
 import org.jose4j.jwt.NumericDate;
 import org.jose4j.keys.HmacKey;
 
-public class JwtTokenUtility {
+public class JwtTokenGenerator {
 
-	public String buildJwt(String subject, int userId) {
+	public String generateJwt(long userId,String subject, String userRole) {
 		NumericDate issuedAt = NumericDate.now();
 		JwtClaims claims = new JwtClaims();
 		claims.setSubject(subject);
 		claims.setIssuedAt(issuedAt);
 		claims.setExpirationTimeMinutesInTheFuture(60);
-		claims.setClaim("role", "customer");
+		claims.setClaim("role", userRole);
 		claims.setClaim("userid", userId);
 
 		String secret = "secret";
@@ -30,13 +30,8 @@ public class JwtTokenUtility {
 			jws.setDoKeyValidation(false);
 			jwt = jws.getCompactSerialization();
 		} catch (Exception e) {
-			System.out.println("Problem occurred while serialization");
+			System.out.println("Problem occurred while generating JWT token");
 		}
-
-		System.out.println("Claim:\n" + claims);
-		System.out.println("JWS:\n" + jws);
-		System.out.println("JWT:\n" + jwt);
-
 		return jwt;
 	}
 

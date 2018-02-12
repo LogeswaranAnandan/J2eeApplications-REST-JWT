@@ -15,25 +15,20 @@ public class AdminDelegate {
 	Logger logger = Logger.getLogger(AdminDelegate.class.getName());
 	BikeApplicationDao dao = new BikeApplicationDao();
 	
-	public void viewAllBikes(HttpServletRequest request, HttpServletResponse response) {
-		List<BikeBeanClass> bikeBeanList = dao.viewAllBikes();
-		request.setAttribute("bikeBeanList", bikeBeanList);
+	public List<BikeBeanClass> viewAllBikes() {
+		 return dao.viewAllBikes();
 	}
 	
-	public void viewAllRentedBikes(HttpServletRequest request, HttpServletResponse response) {
-		List<RentBeanClass> rentBeanList = dao.viewAllRentedBikes();
-		request.setAttribute("rentBeanList", rentBeanList);
+	public List<RentBeanClass> viewAllRentedBikes() {
+		 return dao.viewAllRentedBikes();
 	}
 	
-	public void viewAllUsers(HttpServletRequest request, HttpServletResponse response) {
-		List<UserBeanClass> userBeanList = dao.viewAllUsers();
-		request.setAttribute("userBeanList", userBeanList);
+	public List<UserBeanClass> viewAllUsers() {
+		 return dao.viewAllUsers();
 	}
 	
-	public void addNewRegistrationNumber(HttpServletRequest request, HttpServletResponse response) {
-		int bikeId = Integer.parseInt(request.getParameter("bikename"));
-		String registrationNumber = request.getParameter("registration-number");
-		dao.addNewRegistrationNumber(bikeId, registrationNumber);
+	public boolean addNewRegistrationNumber(int bikeId, String registrationNumber) {
+		return dao.addNewRegistrationNumber(bikeId, registrationNumber);
 	}
 	
 	

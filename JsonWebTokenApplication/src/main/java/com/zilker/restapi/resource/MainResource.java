@@ -21,7 +21,7 @@ public class MainResource {
 		JwtTokenUtility jwt = new JwtTokenUtility();
 		Response response = null;
 		if(userName.equals("lokesh") && password.equals("loki")) {
-			response = Response.ok("user is authenticated").header("jwt", jwt.buildJwt(userName)).build();
+			response = Response.ok("user is authenticated").header("jwt", jwt.buildJwt(userName, 101)).build();
 		} else {
 			response = Response.status(Response.Status.UNAUTHORIZED).build();
 		}

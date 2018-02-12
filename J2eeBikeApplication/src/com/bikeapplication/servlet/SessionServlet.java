@@ -32,30 +32,25 @@ public class SessionServlet extends HttpServlet {
 		String userRequest = request.getParameter("submit-button");
 		if (userRequest.equals("LOGIN")) {
 			RequestDispatcher requestDispatcher;
-			UserBeanClass userBean = new UserBeanClass();
-			String userName = request.getParameter("username");
-			String password = request.getParameter("password");
+			UserBeanClass userBean;
 			try {
-				userBean = delegate.validateLogin(userName, password);
+				userBean = delegate.validateLogin(request, response);
 				if (userBean != null) {
 					if (userBean.getUserRole().equals("Customer")) {
 						requestDispatcher = request.getRequestDispatcher("jsp/customer/customer.jsp");
 					} else {
 						requestDispatcher = request.getRequestDispatcher("jsp/admin/admin.jsp");
 					}
-					HttpSession session = request.getSession();
-					session.setAttribute("userId", userBean.getUserId());
-					session.setAttribute("userName", userBean.getUserName());
-					session.setAttribute("userRole", userBean.getUserRole());
 					requestDispatcher.forward(request, response);
 				} else {
 					request.setAttribute("loginStatus", "invalid");
+					request.setAttribute("errorMessage", "Invalid Username or Password");
 					requestDispatcher = request.getRequestDispatcher("index.jsp");
 					requestDispatcher.forward(request, response);
 				}
 			} catch (Exception e) {
 				response.sendRedirect("index.jsp");
-				logger.warning("in login exception");
+				logger.warning("Problem occurred while logging in");
 			}
 		} else if (userRequest.equals("SIGN UP")) {
 			RequestDispatcher dispatcher;

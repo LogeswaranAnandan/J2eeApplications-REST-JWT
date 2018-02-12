@@ -584,7 +584,8 @@ public class BikeApplicationDao {
 		return userbeanlist;
 	}
 	
-	public void addNewRegistrationNumber(int bikeId, String registrationNumber) {
+	public boolean addNewRegistrationNumber(int bikeId, String registrationNumber) {
+		boolean isSuccessful = false;
 		String query = Constants.ADD_REGISTRATION_NUMBER;
 		PreparedStatement statement = queryExecutor(query);
 		int rowsAffected = 0;
@@ -595,12 +596,14 @@ public class BikeApplicationDao {
 			if(rowsAffected > 0) {
 				logger.info("Bike is added");
 				increaseAvailability(bikeId);
+				isSuccessful = true;
 			}
 		} catch (SQLException e) {
 			logger.warning("problem while inserting new bike in existing list");
 		} finally {
 			closeConnection(result, statement, connection);
 		}
+		return isSuccessful;
 	}
 
 }

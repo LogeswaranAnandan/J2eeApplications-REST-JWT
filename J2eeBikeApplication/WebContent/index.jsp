@@ -21,7 +21,7 @@
 				<label for="password">PASSWORD</label>
 				<input type="password" id="password" name="password" placeholder="Enter your password..." required autofocus /><br/>
 				<c:if test="${loginStatus eq 'invalid' }">
-					<font><i class="fa fa-info-circle" aria-hidden="true"></i>Invalid Username or Password</font>
+					<font><i class="fa fa-info-circle" aria-hidden="true"></i>${errorMessage }</font>
 				</c:if>
 				<input type="submit" name="submit-button" value="LOGIN"/>
 			</div>

@@ -1,11 +1,11 @@
-document.getElementsByName('body')[0].onload = function() {bootstrapping()};
+document.getElementsByTagName('body')[0].onload = function() {bootstrapping()};
 
 function bootstrapping() {
-	document.getElementsByName('quantity')[0].addEventListener('click', displayAddForm);
 	document.getElementsByName('display-add-form')[0].addEventListener('click', displayQuantityForm);
+//	document.getElementsByName('quantity')[0].addEventListener('click', displayAddForm);
 }
 
-function displayQunatityForm(event) {
+function displayQuantityForm(event) {
 	var textNode = document.createTextNode('Enter the number of bikes : ');
 	var input = document.createElement('input');
 	var container = document.getElementById('container');
@@ -13,6 +13,7 @@ function displayQunatityForm(event) {
 	input.name = 'quantity';
 	container.appendChild(textNode);
 	container.appendChild(input);
+	document.getElementsByName('quantity')[0].addEventListener('click', displayAddForm);
 }
 
 function displayAddForm(event) {

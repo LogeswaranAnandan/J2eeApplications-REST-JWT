@@ -23,6 +23,6 @@
 			<div id='container'></div>
 		</form>
 	</section>
-	<script type="text/javascript" src="javascript/addbike.js"></script>
+	<script type="text/javascript" src="./javascript/addbike.js"></script>
 </body>
 </html>

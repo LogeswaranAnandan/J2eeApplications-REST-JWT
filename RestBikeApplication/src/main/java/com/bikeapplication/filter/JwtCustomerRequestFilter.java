@@ -1,4 +1,4 @@
-package com.zilker.restapi.filter;
+package com.bikeapplication.filter;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -10,6 +10,7 @@ import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.ext.Provider;
 
 import org.jose4j.jwt.JwtClaims;
@@ -18,14 +19,14 @@ import org.jose4j.jwt.consumer.JwtConsumer;
 import org.jose4j.jwt.consumer.JwtConsumerBuilder;
 import org.jose4j.keys.HmacKey;
 
-import com.zilker.restapi.customexception.UnauthorizedAccess;
-import com.zilker.restapi.namebinding.Secured;
+import com.bikeapplication.annotation.Customer;
+import com.bikeapplication.customexception.UnauthorizedAccessException;
 
 @Priority(Priorities.AUTHENTICATION)
 @Provider
-@Secured
-public class JwtRequestFilter implements ContainerRequestFilter {
-	static Logger logger = Logger.getLogger(JwtRequestFilter.class.getName());
+@Customer
+public class JwtCustomerRequestFilter implements ContainerRequestFilter {
+	static Logger logger = Logger.getLogger(JwtCustomerRequestFilter.class.getName());
 	public static final String AUTHENTICATION_HEADER = "Authorization";
 
 	@Override
@@ -36,12 +37,41 @@ public class JwtRequestFilter implements ContainerRequestFilter {
 
 		try {
 			if (authHeader.startsWith("Bearer")) {
-				System.out.println("JWT being tested:\n" + authHeader.split(" ")[1]);
-				final String subject = validate(authHeader.split(" ")[1]);
+				String returnedData = validate(authHeader.split(" ")[1]);
+				final String userId = returnedData.split(" ")[0];
+				final String subject = returnedData.split(" ")[1];
+				final String role = returnedData.split(" ")[2];
 				if (subject != null) {
-					logger.info("subject is found = " + subject);
-				} else {
-					logger.info("subject is null");
+					requestContext.setSecurityContext(new SecurityContext() {
+						
+						@Override
+						public boolean isUserInRole(String role) {
+							return false;
+						}
+						
+						@Override
+						public boolean isSecure() {
+							return false;
+						}
+						
+						@Override
+						public Principal getUserPrincipal() {
+							return new Principal() {
+								
+								@Override
+								public String getName() {
+									return userId + " " + subject + " " + role;
+								}
+							};
+						}
+						
+						@Override
+						public String getAuthenticationScheme() {
+							// TODO Auto-generated method stub
+							return null;
+						}
+						
+					});
 				}
 			} else {
 				logger.warning("No JWT token is found");
@@ -56,21 +86,23 @@ public class JwtRequestFilter implements ContainerRequestFilter {
 		}
 	}
 
-	private String validate(String jwt) throws UnsupportedEncodingException, InvalidJwtException, UnauthorizedAccess {
+	private String validate(String jwt) throws UnsupportedEncodingException, InvalidJwtException, UnauthorizedAccessException {
 		String secret = "secret";
 		String subject = null;
 		String role = null;
+		String userId = null;
 		JwtConsumer jwtConsumer = new JwtConsumerBuilder().setRequireSubject()
 				.setVerificationKey(new HmacKey(secret.getBytes("UTF-8"))).setRelaxVerificationKeyValidation().build();
 		JwtClaims jwtClaims = jwtConsumer.processToClaims(jwt);
 		subject = jwtClaims.getClaimValue("sub").toString();
 		role = jwtClaims.getClaimValue("role").toString();
-		logger.info("role = " + role);
-		if (!(role.equals("customer") || role.equals("admin"))) {
-			throw new UnauthorizedAccess();
+		userId = jwtClaims.getClaimValue("userid").toString();
+		if (!(role.equalsIgnoreCase("customer") || role.equalsIgnoreCase("admin"))) {
+
+			System.out.println("role = " + role);
+			throw new UnauthorizedAccessException();
 		}
-		logger.info("claims = " + jwtClaims.toString());
-		return subject;
+		return userId + " " + subject + " " + role;
 	}
 
 }

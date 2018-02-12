@@ -33,4 +33,8 @@ public class CustomerDelegate {
 	public List<ApplicationBeanClass> viewRentHistory(int userId) {
 		return dao.viewRentHistory(userId);
 	}
+
+	public List<RentBeanClass> viewAllRentedBikes() {
+		return dao.viewAllRentedBikes();
+	}
 }

@@ -39,7 +39,6 @@ public class Delegate {
 			System.out.println("jwt = " + session.getAttribute("jwt").toString());
 		} catch (Exception e) {
 			logger.warning("Problem while executing get request method");
-			session.setAttribute("jwt", null);
 		}
 		
 	}
